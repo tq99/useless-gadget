@@ -7,6 +7,7 @@ const CameraAccess: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [photo, setPhoto] = useState<string | null>(null);
+  const [responseMessage, setResponseMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const getCameraAccess = async () => {
@@ -41,7 +42,31 @@ const CameraAccess: React.FC = () => {
       canvas.height = video.videoHeight;
       const context = canvas.getContext("2d");
       context?.drawImage(video, 0, 0, canvas.width, canvas.height);
-      setPhoto(canvas.toDataURL("image/png"));
+      const photoData = canvas.toDataURL("image/jpeg");
+      setPhoto(photoData);
+      uploadPhoto(photoData);
+    }
+  };
+
+  const uploadPhoto = async (photoData: string) => {
+    // Explicitly type photoData as string
+    try {
+      const response = await fetch("/api/gemini-upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ imageData: photoData }), // Sending the base64 data
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log("Upload successful:", data);
+    } catch (error) {
+      console.error("Error uploading photo:", error);
     }
   };
 
@@ -71,6 +96,12 @@ const CameraAccess: React.FC = () => {
                 alt="Captured"
                 style={{ maxWidth: "100%", marginTop: "10px" }}
               />
+            </div>
+          )}
+          {responseMessage && (
+            <div>
+              <h2>Response:</h2>
+              <p>{responseMessage}</p>
             </div>
           )}
         </>
