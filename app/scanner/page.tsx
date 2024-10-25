@@ -7,7 +7,7 @@ const CameraAccess: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [photo, setPhoto] = useState<string | null>(null);
-  const [responseMessage] = useState<string | null>(null);
+  const [responseMessage, setResponseMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const getCameraAccess = async () => {
@@ -87,6 +87,7 @@ const CameraAccess: React.FC = () => {
       }
 
       const data = await response.json();
+      setResponseMessage(data.output);
       console.log("Upload successful:", data);
     } catch (error) {
       console.error("Error uploading photo:", error);

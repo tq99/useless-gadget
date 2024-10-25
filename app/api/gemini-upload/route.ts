@@ -21,8 +21,9 @@ export async function POST(req: Request) {
       },
     };
 
+    // Generate content with the image
     const result = await model.generateContent([
-      "Tell me about this image.",
+      "Tell me about this image if it is plant or not. only answer plant or not plant",
       imagePart,
     ]);
 
