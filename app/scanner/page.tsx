@@ -6,6 +6,7 @@ import ModeToggle from "@/components/mode-toggle";
 import { Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import useStore from "@/app/store/store";
 
 const Loader = () => (
   <motion.div
@@ -31,8 +32,36 @@ const CameraAccess: React.FC = () => {
   const [responseMessage, setResponseMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const { isPlant, isFood, isLiving, setIsPlant, setIsFood, setIsLiving } =
+    useStore();
+
+  let prompt = "";
+
+  if (isPlant) {
+    prompt =
+      "Tell if this image is plant or not. Only answer plant or not plant";
+  } else if (isFood) {
+    prompt = "Tell if this image is food or not. Only answer food or not food.";
+  } else if (isLiving) {
+    prompt =
+      "Tell if this image is living or not. Only answer living or not living.";
+  }
 
   useEffect(() => {
+    if (isPlant) {
+      setIsFood(false);
+      setIsLiving(false);
+    } else if (isFood) {
+      setIsPlant(false);
+      setIsLiving(false);
+      prompt =
+        "Tell me about this image if it is food or not. Only answer food or not food.";
+    } else if (isLiving) {
+      setIsPlant(false);
+      setIsFood(false);
+      prompt =
+        "Tell me about this image if it is living or not. Only answer living or not living.";
+    }
     const getCameraAccess = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
@@ -55,7 +84,7 @@ const CameraAccess: React.FC = () => {
         tracks.forEach((track) => track.stop());
       }
     };
-  }, []);
+  }, [isPlant, isFood, isLiving, setIsFood, setIsLiving, setIsPlant]);
 
   const base64ToFile = (base64: string, filename: string): File => {
     const arr = base64.split(",");
@@ -90,9 +119,11 @@ const CameraAccess: React.FC = () => {
 
   const uploadPhoto = async (photoFile: File) => {
     setLoading(true);
+
     try {
       const formData = new FormData();
       formData.append("image", photoFile);
+      formData.append("prompt", prompt);
       const response = await fetch("/api/gemini-upload", {
         method: "POST",
         body: formData,

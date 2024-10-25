@@ -14,8 +14,11 @@ import { Badge } from "@/components/ui/badge";
 import { Leaf, Utensils, PawPrint } from "lucide-react";
 import { Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
+import useStore from "@/app/store/store";
 
 export default function Home() {
+  const { setIsPlant, setIsFood, setIsLiving } = useStore();
+
   const featuresRef = useRef(null);
   const router = useRouter();
 
@@ -70,6 +73,9 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card
             onClick={() => {
+              setIsPlant(true);
+              setIsFood(false);
+              setIsLiving(false);
               router.push("/scanner");
             }}
             className="transition-all hover:shadow-lg"
@@ -99,7 +105,14 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Card className="transition-all hover:shadow-lg">
+          <Card
+            onClick={() => {
+              setIsFood(true);
+              setIsLiving(false);
+              setIsPlant(false);
+              router.push("/scanner");
+            }}
+          >
             <CardHeader>
               <div className="p-2 w-fit rounded-lg bg-primary/10 mb-4">
                 <Utensils className="w-6 h-6 text-primary" />
@@ -125,7 +138,15 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Card className="transition-all hover:shadow-lg">
+          <Card
+            onClick={() => {
+              setIsLiving(true);
+              setIsFood(false);
+              setIsPlant(false);
+              router.push("/scanner");
+            }}
+            className="transition-all hover:shadow-lg"
+          >
             <CardHeader>
               <div className="p-2 w-fit rounded-lg bg-primary/10 mb-4">
                 <PawPrint className="w-6 h-6 text-primary" />

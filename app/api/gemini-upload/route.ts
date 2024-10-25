@@ -8,6 +8,7 @@ export async function POST(req: Request) {
   try {
     const formData = await req.formData();
     const imageFile = formData.get("image") as File;
+    const prompt = formData.get("prompt") as string;
 
     const arrayBuffer = await imageFile.arrayBuffer();
     const uint8Array = new Uint8Array(arrayBuffer);
@@ -22,10 +23,7 @@ export async function POST(req: Request) {
     };
 
     // Generate content with the image
-    const result = await model.generateContent([
-      "Tell me about this image if it is plant or not. only answer plant or not plant",
-      imagePart,
-    ]);
+    const result = await model.generateContent([prompt, imagePart]);
 
     const response = await result.response;
     const output = response.text();
