@@ -158,17 +158,19 @@ const CameraAccess: React.FC = () => {
         <p className="text-red-600">{error}</p>
       ) : (
         <>
-          <Card className="transition-all hover:shadow-lg flex flex-col items-center mt-5 p-4 rounded-lg shadow-lg bg-white">
-            <video
-              ref={videoRef}
-              autoPlay
-              style={{ width: "100%", height: "auto", maxHeight: "180px" }}
-              className="rounded-lg shadow-lg border border-gray-300"
-            />
-            <Button onClick={capturePhoto} className="mt-4 w-full">
-              Capture Photo
-            </Button>
-          </Card>
+          {!photo && (
+            <Card className="transition-all hover:shadow-lg flex flex-col items-center mt-5 p-4 rounded-lg shadow-lg bg-white">
+              <video
+                ref={videoRef}
+                autoPlay
+                style={{ width: "100%", height: "auto", maxHeight: "180px" }}
+                className="rounded-lg shadow-lg border border-gray-300"
+              />
+              <Button onClick={capturePhoto} className="mt-4 w-full">
+                Capture Photo
+              </Button>
+            </Card>
+          )}
           <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
 
           {loading && (
