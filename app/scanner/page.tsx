@@ -48,20 +48,6 @@ const CameraAccess: React.FC = () => {
   }
 
   useEffect(() => {
-    if (isPlant) {
-      setIsFood(false);
-      setIsLiving(false);
-    } else if (isFood) {
-      setIsPlant(false);
-      setIsLiving(false);
-      prompt =
-        "Tell me about this image if it is food or not. Only answer food or not food.";
-    } else if (isLiving) {
-      setIsPlant(false);
-      setIsFood(false);
-      prompt =
-        "Tell me about this image if it is living or not. Only answer living or not living.";
-    }
     const getCameraAccess = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
