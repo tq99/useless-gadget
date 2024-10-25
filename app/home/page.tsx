@@ -1,53 +1,151 @@
-// app/page.tsx
-
-"use client"; // Marking this component as a client component
-
-import Image from 'next/image';
-import { Button } from '@/components/ui/button'; // Adjust the import path based on your setup
+"use client";
+import React, { useRef } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import ModeToggle from '@/components/mode-toggle';
+import { Badge } from '@/components/ui/badge';
+import { ArrowRight, Leaf, Utensils , PawPrint } from 'lucide-react';
+import { Sparkles } from "lucide-react";
 
 export default function Home() {
-    return (
-        <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100">
-            {/* Header Section */}
-            <header className="w-full p-4 bg-blue-600 text-white flex justify-between items-center">
-                <h1 className="text-2xl font-bold">Useless Gadget</h1>
-                <Button variant="outline" className="text-white">Login</Button>
-            </header>
+  const featuresRef = useRef(null);
 
-            {/* Main Content */}
-            <main className="flex flex-col items-center space-y-8 mt-8 w-full">
+  const scrollToFeatures = () => {
+    if (featuresRef.current) {
+      featuresRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
-                {/* Section 1 - Full Width with Max Width */}
-                <section className="flex items-start bg-white shadow-md rounded-lg p-4 w-full max-w-[calc(100%-2rem)]"> 
-                    <Image src="/path/to/image1.jpg" alt="Image 1" width={150} height={150} className="mr-4" />
-                    <div className="flex flex-col">
-                        <h2 className="text-xl font-semibold">Section 1 Title</h2>
-                        <p>This is some description text for section 1.</p>
-                        <Button className="mt-2">Learn More</Button>
-                    </div>
-                </section>
-
-                {/* Section 2 */}
-                <section className="flex items-start bg-white shadow-md rounded-lg p-4 w-full max-w-[calc(100%-2rem)]">
-                    <Image src="/path/to/image2.jpg" alt="Image 2" width={150} height={150} className="mr-4" />
-                    <div className="flex flex-col">
-                        <h2 className="text-xl font-semibold">Section 2 Title</h2>
-                        <p>This is some description text for section 2.</p>
-                        <Button className="mt-2">Learn More</Button>
-                    </div>
-                </section>
-
-                {/* Section 3 */}
-                <section className="flex items-start bg-white shadow-md rounded-lg p-4 w-full max-w-[calc(100%-2rem)]">
-                    <Image src="/path/to/image3.jpg" alt="Image 3" width={150} height={150} className="mr-4" />
-                    <div className="flex flex-col">
-                        <h2 className="text-xl font-semibold">Section 3 Title</h2>
-                        <p>This is some description text for section 3.</p>
-                        <Button className="mt-2">Learn More</Button>
-                    </div>
-                </section>
-
-            </main>
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header Section */}
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="flex h-16 items-center justify-between px-4">
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-6 w-6" />
+            <span className="text-xl font-bold">Useless Gadget</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <ModeToggle />
+            <Button variant="outline" size="sm">
+              Sign in
+            </Button>
+            <Button size="sm">Get Started</Button>
+          </div>
         </div>
-    );
+      </header>
+
+      {/* Hero Section */}
+      <section className="flex flex-col items-center px-4 py-24 md:py-32">
+        <div className="flex flex-col items-center text-center space-y-4">
+          <Badge className="mb-4" variant="secondary">
+            ✨ Welcome to Useless Gadget 2.0
+          </Badge>
+          <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
+            Discover the art of identifying the identifiable
+            <br className="hidden sm:inline" /> and having fun!
+          </h1>
+          <p className="max-w-[700px] text-muted-foreground md:text-xl text-center">
+            Dive into a world where we help you figure out if it's a plant, food, or just a living thing! 
+            Embrace the joy of solving utterly pointless mysteries with our quirky gadget.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 mt-8">
+            <Button size="lg" className="gap-2" onClick={scrollToFeatures}>
+              Start Exploring <ArrowRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section ref={featuresRef} className="flex flex-col items-center px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card className="transition-all hover:shadow-lg">
+            <CardHeader>
+              <div className="p-2 w-fit rounded-lg bg-primary/10 mb-4">
+                <Leaf className="w-6 h-6 text-primary" />
+              </div>
+              <CardTitle>Check Plants</CardTitle>
+              <CardDescription>
+                Upload a photo to see if it's a plant. 
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-4">
+                <Avatar>
+                  <AvatarImage src="/api/placeholder/32/32" alt="User" />
+                  <AvatarFallback>UN</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium">Alice Cooper</span>
+                  <span className="text-sm text-muted-foreground">
+                    "It identified my houseplants effortlessly!"
+                  </span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="transition-all hover:shadow-lg">
+            <CardHeader>
+              <div className="p-2 w-fit rounded-lg bg-primary/10 mb-4">
+                <Utensils className="w-6 h-6 text-primary" />
+              </div>
+              <CardTitle>Check Food</CardTitle>
+              <CardDescription>
+                Snap a pic and find out if it's food. 
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-4">
+                <Avatar>
+                  <AvatarImage src="/api/placeholder/32/32" alt="User" />
+                  <AvatarFallback>BN</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium">Bob Newman</span>
+                  <span className="text-sm text-muted-foreground">
+                    "I learned my pizza was technically food!"
+                  </span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="transition-all hover:shadow-lg">
+            <CardHeader>
+              <div className="p-2 w-fit rounded-lg bg-primary/10 mb-4">
+                <PawPrint className="w-6 h-6 text-primary" />
+              </div>
+              <CardTitle>Check Living Things</CardTitle>
+              <CardDescription>
+                Find out if it's a living thing with a simple click!
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-4">
+                <Avatar>
+                  <AvatarImage src="/api/placeholder/32/32" alt="User" />
+                  <AvatarFallback>CD</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium">Carol Davis</span>
+                  <span className="text-sm text-muted-foreground">
+                    "It told me my cat is alive. Good to know!"
+                  </span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+    </div>
+  );
 }
