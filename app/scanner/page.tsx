@@ -50,9 +50,14 @@ const CameraAccess: React.FC = () => {
   useEffect(() => {
     const getCameraAccess = async () => {
       try {
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
+          video: {
+            facingMode: isMobile ? { exact: "environment" } : "user",
+          },
         });
+
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
         }
