@@ -1,6 +1,5 @@
 // firebase.ts
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
@@ -10,9 +9,8 @@ const firebaseConfig = {
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: "G-FHP4CH1DQE"
+  measurementId: "G-FHP4CH1DQE",
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 export const storage = getStorage(app);
