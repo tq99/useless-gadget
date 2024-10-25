@@ -1,4 +1,5 @@
-import React from 'react';
+"use client";
+import React, { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -10,14 +11,23 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import ModeToggle from '@/components/mode-toggle';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Sparkles, Zap, Boxes } from 'lucide-react';
+import { ArrowRight, Leaf, Utensils , PawPrint } from 'lucide-react';
+import { Sparkles } from "lucide-react";
 
 export default function Home() {
+  const featuresRef = useRef(null);
+
+  const scrollToFeatures = () => {
+    if (featuresRef.current) {
+      featuresRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header Section */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className=" flex h-16 items-center justify-between">
+        <div className="flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2">
             <Sparkles className="h-6 w-6" />
             <span className="text-xl font-bold">Useless Gadget</span>
@@ -33,41 +43,38 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className=" flex flex-col items-center  px-4 py-24 md:py-32">
+      <section className="flex flex-col items-center px-4 py-24 md:py-32">
         <div className="flex flex-col items-center text-center space-y-4">
           <Badge className="mb-4" variant="secondary">
-            ✨ Introducing Useless Gadget 2.0
+            ✨ Welcome to Useless Gadget 2.0
           </Badge>
           <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-            Making useless things
-            <br className="hidden sm:inline" /> extraordinarily well
+            Discover the art of identifying the identifiable
+            <br className="hidden sm:inline" /> and having fun!
           </h1>
           <p className="max-w-[700px] text-muted-foreground md:text-xl text-center">
-            We specialize in creating the most sophisticated solutions to problems that don't exist.
-            Join thousands of users who are solving imaginary problems daily.
+            Dive into a world where we help you figure out if it's a plant, food, or just a living thing! 
+            Embrace the joy of solving utterly pointless mysteries with our quirky gadget.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-8">
-            <Button size="lg" className="gap-2">
-              Get Started <ArrowRight className="h-4 w-4" />
-            </Button>
-            <Button size="lg" variant="outline">
-              Learn More
+            <Button size="lg" className="gap-2" onClick={scrollToFeatures}>
+              Start Exploring <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className=" flex flex-col items-center px-4 py-16">
+      <section ref={featuresRef} className="flex flex-col items-center px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className="transition-all hover:shadow-lg">
             <CardHeader>
               <div className="p-2 w-fit rounded-lg bg-primary/10 mb-4">
-                <Zap className="w-6 h-6 text-primary" />
+                <Leaf className="w-6 h-6 text-primary" />
               </div>
-              <CardTitle>Lightning Fast</CardTitle>
+              <CardTitle>Check Plants</CardTitle>
               <CardDescription>
-                So fast you won't even notice it's not doing anything useful.
+                Upload a photo to see if it's a plant. 
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -79,7 +86,7 @@ export default function Home() {
                 <div className="flex flex-col">
                   <span className="text-sm font-medium">Alice Cooper</span>
                   <span className="text-sm text-muted-foreground">
-                    "It's amazingly quick at being useless!"
+                    "It identified my houseplants effortlessly!"
                   </span>
                 </div>
               </div>
@@ -89,11 +96,11 @@ export default function Home() {
           <Card className="transition-all hover:shadow-lg">
             <CardHeader>
               <div className="p-2 w-fit rounded-lg bg-primary/10 mb-4">
-                <Boxes className="w-6 h-6 text-primary" />
+                <Utensils className="w-6 h-6 text-primary" />
               </div>
-              <CardTitle>AI Powered</CardTitle>
+              <CardTitle>Check Food</CardTitle>
               <CardDescription>
-                Uses advanced AI to generate absolutely meaningless results.
+                Snap a pic and find out if it's food. 
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -105,7 +112,7 @@ export default function Home() {
                 <div className="flex flex-col">
                   <span className="text-sm font-medium">Bob Newman</span>
                   <span className="text-sm text-muted-foreground">
-                    "The AI makes it feel important!"
+                    "I learned my pizza was technically food!"
                   </span>
                 </div>
               </div>
@@ -115,11 +122,11 @@ export default function Home() {
           <Card className="transition-all hover:shadow-lg">
             <CardHeader>
               <div className="p-2 w-fit rounded-lg bg-primary/10 mb-4">
-                <Sparkles className="w-6 h-6 text-primary" />
+                <PawPrint className="w-6 h-6 text-primary" />
               </div>
-              <CardTitle>Beautiful UI</CardTitle>
+              <CardTitle>Check Living Things</CardTitle>
               <CardDescription>
-                Gorgeous interface that distracts from its lack of purpose.
+                Find out if it's a living thing with a simple click!
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -131,7 +138,7 @@ export default function Home() {
                 <div className="flex flex-col">
                   <span className="text-sm font-medium">Carol Davis</span>
                   <span className="text-sm text-muted-foreground">
-                    "At least it looks amazing!"
+                    "It told me my cat is alive. Good to know!"
                   </span>
                 </div>
               </div>
