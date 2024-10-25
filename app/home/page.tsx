@@ -171,6 +171,39 @@ export default function Home() {
               </div>
             </CardContent>
           </Card>
+
+          <Card
+            onClick={() => {
+              router.push("/digest");
+            }}
+            className="transition-all hover:shadow-lg"
+          >
+            <CardHeader>
+              <div className="p-2 w-fit rounded-lg bg-primary/10 mb-4">
+                <PawPrint className="w-6 h-6 text-primary" />
+              </div>
+              <CardTitle>Check Digestion Time</CardTitle>
+              <CardDescription>
+                {"Find out the Digestion Time of the thing you ate"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-4">
+                <Avatar>
+                  <AvatarImage src="/api/placeholder/32/32" alt="User" />
+                  <AvatarFallback>DJ</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium">Drake Johns</span>
+                  <span className="text-sm text-muted-foreground">
+                    {
+                      "It basically told me I have digestion issues. Helpful Stuff!"
+                    }
+                  </span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
     </div>

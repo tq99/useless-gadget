@@ -26,6 +26,7 @@ const useStore = create<StoreState>()(
       isPlant: false,
       isFood: false,
       isLiving: false,
+      isFourtimes: false,
       setIsPlant: (value) => set({ isPlant: value }),
       setIsFood: (value) => set({ isFood: value }),
       setIsLiving: (value) => set({ isLiving: value }),
